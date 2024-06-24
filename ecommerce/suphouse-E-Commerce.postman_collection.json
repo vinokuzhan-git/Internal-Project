@@ -1,0 +1,178 @@
+{
+	"info": {
+		"_postman_id": "737927ef-a17c-4a06-9c84-3df75e2b3bcf",
+		"name": "suphouse-E-Commerce",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4047489"
+	},
+	"item": [
+		{
+			"name": "Create/Update Account",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"john\",\r\n    \"lastName\": \"Abraham\",\r\n    \"email\": \"john@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/ecommerce/account",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ecommerce",
+						"account"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fetch Account Details",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/ecommerce/account/41489787-7889-4bac-b901-9f3b3b5a5cc7",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ecommerce",
+						"account",
+						"41489787-7889-4bac-b901-9f3b3b5a5cc7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upgrade Account",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "accountId",
+						"value": "ec9f57f9-8632-4bfa-9065-755dd63249f9",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/ecommerce/account/bisaccount/41489787-7889-4bac-b901-9f3b3b5a5cc7",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ecommerce",
+						"account",
+						"bisaccount",
+						"41489787-7889-4bac-b901-9f3b3b5a5cc7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Order",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"accountId\": \"41489787-7889-4bac-b901-9f3b3b5a5cc7\",\r\n    \"productName\": \"iPhone 12\",\r\n    \"price\": \"140000.0\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/ecommerce/order",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ecommerce",
+						"order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Send Invitation - Sub-Account invitation",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"bisAccountId\": \"41489787-7889-4bac-b901-9f3b3b5a5cc7\",\r\n  \"accounts\": [\r\n    {\r\n      \"accountId\": \"5fa744be-92dd-4169-a7f4-591976e658ab\"\r\n    }\r\n  ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/ecommerce/invitation/subaccount",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ecommerce",
+						"invitation",
+						"subaccount"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Approve Invitation",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"bisAccountId\": \"41489787-7889-4bac-b901-9f3b3b5a5cc7\",\r\n  \"accountId\": \"5fa744be-92dd-4169-a7f4-591976e658ab\",\r\n  \"action\": \"ACCEPT\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/ecommerce/invitation/subaccount",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ecommerce",
+						"invitation",
+						"subaccount"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

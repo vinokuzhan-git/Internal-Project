@@ -1,0 +1,598 @@
+openapi: 3.0.3
+info:
+  title: Swagger for  e-commerce
+  version: 1.0.11
+servers:
+  - url: http://localhost:8080/ecommerce
+tags:
+  - name: customer account
+    description: This is the spec of customer/user services of e-commerce
+    externalDocs:
+      description: Find out more
+      url: http://swagger.io
+  - name: order service
+    description: This is the spec order services
+    externalDocs:
+      description: Find out more about our store
+      url: http://swagger.io
+  - name: invitation service
+    description: This is the spec for customer invitation api's
+paths:
+  /account:
+    put:
+      tags:
+        - customer account
+      summary: Update an existing customer account
+      description: Update an existing customer account by email
+      operationId: updatecustomeraccount
+      requestBody:
+        description: Update an existing customer account
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountReq'
+        required: true
+      responses:
+        '200':
+          description: Customer Account Successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountRes'
+        '400':
+          description: Business Validation Exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationException'
+        '401':
+          description: UnAuthorize Exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnAutorizeException'
+        '403':
+          description: UnAuthorize Exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenException'
+        '404':
+          description: Account not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundException'
+        '500':
+          description: Account not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerException'
+    post:
+      tags:
+        - customer account
+      summary: Create customer account
+      description: Create customer account with user details
+      operationId: createcustomeraccount
+      requestBody:
+        description: Create customer account
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountReq'
+        required: true
+      responses:
+        '201':
+          description: Customer Account Successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountRes'
+        '400':
+          description: Business Validation Exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationException'
+        '401':
+          description: UnAuthorize Exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnAutorizeException'
+        '403':
+          description: UnAuthorize Exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenException'
+        '500':
+          description: Account not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerException'
+  /account/{accountId}:
+    get:
+      tags:
+        - customer account
+      summary: Find by customer account id
+      description: Find by customer account id
+      operationId: findcustomeraccountbyid
+      parameters:
+        - name: accountId
+          in: path
+          description: Customer Account Id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Customer Account Exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountRes'
+        '400':
+          description: Business Validation Exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationException'
+        '401':
+          description: UnAuthorize Exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnAutorizeException'
+        '403':
+          description: UnAuthorize Exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenException'
+        '404':
+          description: Account not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundException'
+        '500':
+          description: Account not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerException'
+  /bisaccount/{accountId}:
+    put:
+      tags:
+        - customer account
+      summary: Upgrade customer account to business owner account
+      description: Upgrade customer account id
+      operationId: upgradecustomeraccountbyid
+      parameters:
+        - name: accountId
+          in: path
+          description: Customer Account Id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Customer Account Exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Your account is successfully upgraded !!
+        '400':
+          description: Business Validation Exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationException'
+        '401':
+          description: UnAuthorize Exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnAutorizeException'
+        '403':
+          description: UnAuthorize Exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenException'
+        '404':
+          description: Account not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundException'
+        '500':
+          description: Account not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerException'
+  /order:
+    post:
+      tags:
+        - order service
+      summary: Create Order for the customer
+      description: Create Order for the customer
+      operationId: createorder
+      requestBody:
+        description: Create Order for customer
+        content:
+          application/json:
+            schema:
+                type: object
+                properties:
+                  accountId:
+                    type: string
+                    format: uuid
+                    example: 218de274-505d-4a30-bf4d-0d42838f43bf
+                  productName:
+                    type: string
+                    example: iPhone 12  
+                  price:
+                    type: string
+                    format: digits
+                    example: 40000.0  
+        required: true
+      responses:
+        '200':
+          description: Customer Account Successfully created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  orderId:
+                    type: string
+                    format: uuid
+                    example: AXXXTY65J
+        '400':
+          description: Business Validation Exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationException'
+        '401':
+          description: UnAuthorize Exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnAutorizeException'
+        '403':
+          description: UnAuthorize Exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenException'
+        '500':
+          description: Account not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerException'
+  /order/details/{accountId}:
+    get:
+      tags:
+        - order service
+      summary: Find order history by account id
+      description: Find by account id
+      operationId: findorderbyaccountid
+      parameters:
+        - name: accountId
+          in: path
+          description: customer account Id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Order history by customer account id
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderDetails'
+        '400':
+          description: Business Validation Exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationException'
+        '401':
+          description: UnAuthorize Exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnAutorizeException'
+        '403':
+          description: UnAuthorize Exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenException'
+        '404':
+          description: Account not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundException'
+        '500':
+          description: Account not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerException'
+  /invitation/subaccount:
+    post:
+      tags:
+        - invitation service
+      summary: Send invitation to the other account holder to org
+      description: Send invitation to account holder
+      operationId: sendinvitation
+      requestBody:
+        description: Send Invitation to account holder
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                bisAccountid:
+                  type: string
+                  format: uuid
+                  example: "XXXX"
+                accounts:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/InvitationRequest'  
+        required: true
+      responses:
+        '201':
+          description: Customer Account Successfully created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    format: uuid
+                    example: Invite successfuly send !!
+        '400':
+          description: Business Validation Exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationException'
+        '401':
+          description: UnAuthorize Exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnAutorizeException'
+        '403':
+          description: UnAuthorize Exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenException'
+        '500':
+          description: Account not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerException'
+    put:
+      tags:
+        - invitation service
+      summary: Accept/Reject/Unlink the invitation
+      description: Accept/Reject/Unlink the invitation
+      operationId: actionagainstinvitation
+      requestBody:
+        description: Send Invitation to account holder
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                bisAccountId:
+                  type: string
+                  format: uuid
+                  example: "XXXX"
+                accountId:
+                  type: string
+                  format: uuid
+                  example: "XXXX"
+                action:
+                  description: Valid Status - ACCEPT, REJECT, UNLINK
+                  type: string
+                  example: 1  
+      responses:
+        '204':
+          description: customer action against invitation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    format: uuid
+                    example: Action performed successfully !!
+        '400':
+          description: Business Validation Exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationException'
+        '401':
+          description: UnAuthorize Exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnAutorizeException'
+        '403':
+          description: UnAuthorize Exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenException'
+        '404':
+          description: Account not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundException'
+        '500':
+          description: Account not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerException'
+components:
+  schemas:
+    AccountReq:
+      required:
+        - firstName
+        - email
+      type: object
+      properties:
+        firstName:
+          type: string
+          example: David
+        lastName:
+          type: string
+          example: Warner
+        email:
+          type: string
+          example: vinoth@gmail.com
+    AccountRes:
+      type: object
+      properties:
+        firstName:
+          type: string
+          example: David
+        lastName:
+          type: string
+          example: Warner
+        email:
+          type: string
+          example: vinoth@gmail.com
+        accountName:
+          type: string
+          example: David Warner
+        accountId:
+          type: string
+          format: uuid
+          example: vinoth@gmail.com
+    OrderDetails:
+      type: object
+      properties:
+        OrderId:
+          type: string
+          format: uuid
+          example: AXXXTY65J
+        productName:
+          type: string
+          example: iPhone 12  
+        totalAmount:
+          type: number
+          format: digits
+          example: '40000'
+        accountId:
+          type: string
+          format: uuid
+          example: AXXXTY65J
+        OrderDate:
+          type: string
+          format: date-time
+          example: '2024-06-22'
+    InvitationRequest:
+      required:
+        - accountId
+      type: object
+      properties:
+        accountId:
+          type: string
+          format: uuid
+          example: AXXXTY65J
+    ValidationException:
+      type: object
+      properties:
+        errorCode:
+          type: string
+          example: VALIDATION_EXCEPTION
+        errorDescription:
+          type: string
+          example: This field is manditory
+        timestamp:
+          type: string
+          example: '1719101704'
+    NotFoundException:
+      type: object
+      properties:
+        errorCode:
+          type: string
+          example: NOT_FOUND_EXCEPTION
+        errorDescription:
+          type: string
+          example: This entity not found
+        timestamp:
+          type: string
+          example: '1719101704'
+    UnAutorizeException:
+      type: object
+      properties:
+        errorCode:
+          type: string
+          example: UN_AUTHORIZE_EXCEPTION
+        errorDescription:
+          type: string
+          example: UnAuthorize Exception
+        timestamp:
+          type: string
+          example: '1719101704'
+    ForbiddenException:
+      type: object
+      properties:
+        errorCode:
+          type: string
+          example: FORBIDDEN_EXCEPTION
+        errorDescription:
+          type: string
+          example: You do not have permission to access this resource
+        timestamp:
+          type: string
+          example: '1719101704'
+    InternalServerException:
+      type: object
+      properties:
+        errorCode:
+          type: string
+          example: INTERNAL_SERVER_EXCEPTION
+        errorDescription:
+          type: string
+          example: An unexpected error occurred. Please try again later
+        timestamp:
+          type: string
+          example: '1719101704'      
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+security:
+  - basicAuth: []
